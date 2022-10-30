@@ -22,6 +22,10 @@
     }
   }
 
+  const handleSelectMenu = (e) => {
+    selectedMenu = e.detail
+  }
+
 </script>
 
 <Router>
@@ -58,13 +62,17 @@
 
   <!-- <Graph /> -->
   <FeedbackStats />
-  <Route path="form" component={FeedbackForm} />
-  
   <Route path="/" >
     <div class="list">
     <FeedbackList />
   </div>
   </Route>
+
+  <Route path="form" >
+    <FeedbackForm {selectedMenu} on:selectMenu={handleSelectMenu} />
+  </Route>
+  
+  
   <Route path="/all-investments" >
     <div class="list">
     <Investments />

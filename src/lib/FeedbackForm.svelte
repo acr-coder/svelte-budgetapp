@@ -9,7 +9,7 @@
   import RatingSelect from "./RatingSelect.svelte";
   import TransitionSelect from "./TransitionSelect.svelte";
   
-
+  export let selectedMenu;
   let text = ''
   let transitionType = "Income"
   let btnDisabled = true
@@ -23,7 +23,7 @@
 
   const handleSelect = e => transitionType = e.detail 
 
-  
+  const dispatch = createEventDispatcher()
 
   const handleSubmit = () => {
     if(text.trim().length > min && text.trim().length < max  ){
@@ -45,7 +45,9 @@
       text = ''
       amount = ''
       date=''
-
+        selectedMenu = "transitions"
+      dispatch('selectMenu', selectedMenu)
+      
       navigate('/')
     }else{
       message=`Text must be between ${min} and ${max} characters. `
