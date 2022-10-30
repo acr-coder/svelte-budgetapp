@@ -38,20 +38,20 @@
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "investments"} class:link="{selectedMenu === "investments"}" >
-      <Link   to="/all-investments" >{$LanguageStore === "TR" ? "Yatırımlar" : "Investments"}</Link>
+      <Link   to="investments" >{$LanguageStore === "TR" ? "Yatırımlar" : "Investments"}</Link>
     </div>
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "expenses"} class:link="{selectedMenu === "expenses"}" >
-      <Link  to="/all-expenses" >{$LanguageStore === "TR" ? "Harcamalar" : "Expenses"}</Link>
+      <Link  to="expenses" >{$LanguageStore === "TR" ? "Harcamalar" : "Expenses"}</Link>
     </div>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "incomes"} class:link="{selectedMenu === "incomes"}" >
-      <Link   to="/all-incomes" >{$LanguageStore === "TR" ? "Gelirler" : "Incomes"}</Link>
+      <Link   to="incomes" >{$LanguageStore === "TR" ? "Gelirler" : "Incomes"}</Link>
     </div>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "new"} class:link="{selectedMenu === "new"}" >
-      <Link  to="/form" >{$LanguageStore === "TR" ? "Yeni İşlem Ekle" : "New Transition"}</Link>
+      <Link  to="form" >{$LanguageStore === "TR" ? "Yeni İşlem Ekle" : "New Transition"}</Link>
     </div>
     <div class="lang" on:click={handleLanguage} >{$LanguageStore === "TR" ? "EN" : "TR"} </div>
     
@@ -73,17 +73,17 @@
   </Route>
   
   
-  <Route path="/all-investments" >
+  <Route path="investments" >
     <div class="list">
     <Investments />
   </div>
   </Route>
-  <Route path="/all-expenses" >
+  <Route path="expenses" >
     <div class="list">
     <Expenses />
   </div>
   </Route>
-  <Route path="/all-incomes" >
+  <Route path="incomes" >
     <div class="list">
     <Incomes />
   </div>
