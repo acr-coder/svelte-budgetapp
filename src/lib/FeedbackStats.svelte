@@ -23,7 +23,7 @@
 </script>
 
 <div class="feedback-stats">
-    <h4 class="box" >{ $LanguageStore === "TR" ? "Toplam İşlem" : "Total Transitions"}: {count > 1 ? `${count}` : `${count} transition`}</h4>
+    <h4 class="box" >{ $LanguageStore === "TR" ? "Toplam İşlem" : "Total Transitions"}: {count > 1 ? `${count}` : `${count}`}</h4>
     <!-- <Graph budget={budget} totalExpenseAmount={totalExpenseAmount} totalInvestmentAmount={totalInvestmentAmount} /> -->
     <h4 class="box" >{ $LanguageStore === "TR" ? "Bütçe" : "Budget"}: {budget} </h4>
     
