@@ -29,7 +29,7 @@
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "transitions"}  class:link="{selectedMenu === "transitions"}" >
-      <Link  to="/all-transitions" >{$LanguageStore === "TR" ? "Tüm İşlemler" : "All Transitions"} </Link>
+      <Link  to="/" >{$LanguageStore === "TR" ? "Tüm İşlemler" : "All Transitions"} </Link>
     </div>
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -60,7 +60,7 @@
   <FeedbackStats />
   <Route path="form" component={FeedbackForm} />
   
-  <Route path="all-transitions" >
+  <Route path="/" >
     <div class="list">
     <FeedbackList />
   </div>

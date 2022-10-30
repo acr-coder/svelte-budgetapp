@@ -46,7 +46,7 @@
       amount = ''
       date=''
 
-      navigate('/all-transitions')
+      navigate('/')
     }else{
       message=`Text must be between ${min} and ${max} characters. `
     }
