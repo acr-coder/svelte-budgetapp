@@ -65,17 +65,17 @@
     <FeedbackList />
   </div>
   </Route>
-  <Route path="all-investments" >
+  <Route path="/all-investments" >
     <div class="list">
     <Investments />
   </div>
   </Route>
-  <Route path="all-expenses" >
+  <Route path="/all-expenses" >
     <div class="list">
     <Expenses />
   </div>
   </Route>
-  <Route path="all-incomes" >
+  <Route path="/all-incomes" >
     <div class="list">
     <Incomes />
   </div>
