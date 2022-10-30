@@ -32,7 +32,7 @@
 <style>
     .feedback-stats{
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
         font-size: 30px;
         margin-bottom: 30px;
@@ -52,4 +52,10 @@
         font-size: 19px;
       }
     }
+
+    @media only screen and (max-width: 800px) {
+  .box{
+    font-size: 16px;
+  }
+}
 </style>

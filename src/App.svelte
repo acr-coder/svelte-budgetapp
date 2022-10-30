@@ -27,6 +27,8 @@
   }
 
 </script>
+<div class="box">
+
 
 <Router>
   <div class="header">
@@ -96,4 +98,4 @@
 </Router>
  
 
-
+</div>
