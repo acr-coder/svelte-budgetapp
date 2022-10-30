@@ -12,7 +12,7 @@
   </script>
   
   {#each expenseList as fb (fb.id) }
-  <div  in:fade out:scale|local={{duration:1000}} animate:flip={{duration: 1000}}  >
+  <div class="expense-list"  in:fade out:scale|local={{duration:1000}} animate:flip={{duration: 1000}}  >
     
     <FeedbackItem {fb} />
   </div>
@@ -20,5 +20,9 @@
   {/each}
   
   <style>
-    
+    @media screen and (min-width: 600px) {
+  .expense-list{
+    margin: auto;
+  }
+}
   </style>

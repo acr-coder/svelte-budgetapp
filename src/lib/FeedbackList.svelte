@@ -12,7 +12,7 @@
 </script>
 
 {#each $FeedbackStore as fb (fb.id) }
-<div  in:fade out:scale|local={{duration:1000}} animate:flip={{duration: 1000}}  >
+<div class="itemList"  in:fade out:scale|local={{duration:1000}} animate:flip={{duration: 1000}}  >
   
   <FeedbackItem {fb} />
 </div>
@@ -20,5 +20,9 @@
 {/each}
 
 <style>
-  
+  @media screen and (min-width: 600px) {
+  .itemList{
+    margin: auto;
+  }
+}
 </style>
