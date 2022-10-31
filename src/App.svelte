@@ -35,7 +35,7 @@
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "transitions"}  class:link="{selectedMenu === "transitions"}" >
-      <Link  to="/" >{$LanguageStore === "TR" ? "Tüm İşlemler" : "All Transitions"} </Link>
+      <Link  to="/" >{$LanguageStore === "TR" ? "Tüm İşlemler" : "All Transactions"} </Link>
     </div>
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -53,7 +53,7 @@
     </div>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "new"} class:link="{selectedMenu === "new"}" >
-      <Link  to="form" >{$LanguageStore === "TR" ? "Yeni İşlem Ekle" : "New Transition"}</Link>
+      <Link  to="form" >{$LanguageStore === "TR" ? "Yeni İşlem Ekle" : "New Transaction"}</Link>
     </div>
     <div class="lang" on:click={handleLanguage} >{$LanguageStore === "TR" ? "EN" : "TR"} </div>
     
