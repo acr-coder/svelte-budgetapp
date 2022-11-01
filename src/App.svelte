@@ -59,7 +59,7 @@
 
 <Router>
   <div class="header">
-    <div on:click={() => selectedMenu = "new"} class:link="{selectedMenu === "new"}" >
+    <div class="yeni" on:click={() => selectedMenu = "new"} class:link="{selectedMenu === "new"}" >
       <Link  to="form" >{$LanguageStore === "TR" ? "Yeni İşlem Ekle" : "New Transaction"} <span>+</span> </Link>
       
     </div>
@@ -67,25 +67,35 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "transitions"}  class:link="{selectedMenu === "transitions"}" >
       <Link  to="/" >{$LanguageStore === "TR" ? "Tüm İşlemler" : "All Transactions"}  </Link>
-      <Badge color="primary">{count}</Badge>
+      
     </div>
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "investments"} class:link="{selectedMenu === "investments"}" >
       <Link   to="investments" >{$LanguageStore === "TR" ? "Yatırımlar" : "Investments"} </Link>
-      <Badge color="primary">{investmentsCount}</Badge>
+     <div>
+      <Badge color="primary">{investmentsCount} {$LanguageStore === "TR" ? "İşlem" : "transactions"}</Badge>
+      <Badge color="primary">{$LanguageStore === "TR" ? "toplam" : "total"}: {totalInvestmentAmount} </Badge>
+    </div>
     </div>
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "expenses"} class:link="{selectedMenu === "expenses"}" >
       <Link  to="expenses" >{$LanguageStore === "TR" ? "Harcamalar" : "Expenses"} </Link>
-      <Badge color="primary">{expenseCount}</Badge>
+      <div>
+      <Badge color="primary">{expenseCount} {$LanguageStore === "TR" ? "İşlem" : "transactions"}</Badge>
+      <Badge color="primary">{$LanguageStore === "TR" ? "toplam" : "total"}: {totalExpenseAmount} </Badge>
+    </div>
     </div>
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "incomes"} class:link="{selectedMenu === "incomes"}" >
       <Link   to="incomes" >{$LanguageStore === "TR" ? "Gelirler" : "Incomes"}</Link>
-      <Badge color="primary">{incomesCount}</Badge>
+      <div>
+        <Badge  color="primary">{incomesCount} {$LanguageStore === "TR" ? "İşlem" : "transactions"}</Badge>
+      <Badge color="primary">{$LanguageStore === "TR" ? "toplam" : "total"}: {totalIncomeAmount} </Badge>
+      </div>
+      
     </div>
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -95,12 +105,12 @@
     
     <div>
       {$LanguageStore === "TR" ? "Yatırımların Gelirlere Oranı" : "Ratio of Investment to Incomes "}
-          <Progress color="warning" value={(totalInvestmentAmount/totalIncomeAmount)*100} ></Progress> %{totalIncomeAmount === 0 ? 0 : (totalInvestmentAmount/totalIncomeAmount)*100}
+          <Progress color="warning" value={(totalInvestmentAmount/totalIncomeAmount)*100} ></Progress> %{Math.round(totalIncomeAmount === 0 ? 0 : (totalInvestmentAmount/totalIncomeAmount)*100)}
 
     </div>
-    <div>
+    <div  >
       {$LanguageStore === "TR" ? "Giderlerin Gelirlere Oranı" : "Ratio of Expenses to Incomes "}
-          <Progress color="info" value={(totalExpenseAmount/totalIncomeAmount)*100} />% {totalIncomeAmount === 0 ? 0 :(totalExpenseAmount/totalIncomeAmount)*100} 
+          <Progress color="info" value={(totalExpenseAmount/totalIncomeAmount)*100} />% {Math.round(totalIncomeAmount === 0 ? 0 :(totalExpenseAmount/totalIncomeAmount)*100)} 
 
     </div>
 
@@ -150,6 +160,9 @@
 </div>
 
 <style>
+  .yeni{
+    font-size: 23px;
+  }
   span{
     width: 30px;
     height: 20px;
