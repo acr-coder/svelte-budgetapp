@@ -32,19 +32,13 @@
   $: investmentsCount = $FeedbackStore.filter((item) => item.transitionType === "Investment").length
 
   let budget;
-  let totalExpenseAmount;
-  let totalInvestmentAmount;
-  let totalIncomeAmount;
-
+  $: totalExpenseAmount =  $FeedbackStore.filter((transition) => transition.transitionType === "Expense").reduce((a, item) => a + item.amount, 0)
+  $: totalIncomeAmount =  $FeedbackStore.filter((transition) => transition.transitionType === "Income").reduce((a, item) => a + item.amount, 0)
+  $: totalInvestmentAmount =  $FeedbackStore.filter((transition) => transition.transitionType === "Investment").reduce((a, item) => a + item.amount, 0)
+ 
   $: if(count === 0){
     budget= 0
-  }else{
-    let expenses = $FeedbackStore.filter((transition) => transition.transitionType === "Expense")
-    let investments = $FeedbackStore.filter((transition) => transition.transitionType === "Investment")
-    let incomes = $FeedbackStore.filter((transition) => transition.transitionType === "Income")
-     totalExpenseAmount = expenses.reduce((a, item) => a + item.amount, 0)
-     totalInvestmentAmount = investments.reduce((a, item) => a + item.amount, 0)
-     totalIncomeAmount = incomes.reduce((a, item) => a + item.amount, 0)
+  }else{       
     budget = $FeedbackStore.reduce((a, item) => a + item.amount, 0) - 2*totalExpenseAmount - 2*totalInvestmentAmount
   }
 
@@ -75,7 +69,7 @@
       <Link   to="investments" >{$LanguageStore === "TR" ? "Yatırımlar" : "Investments"} </Link>
      <div>
       <Badge color="primary">{investmentsCount} {$LanguageStore === "TR" ? "İşlem" : "transactions"}</Badge>
-      <Badge color="primary">{$LanguageStore === "TR" ? "toplam" : "total"}: {totalInvestmentAmount} </Badge>
+      <Badge color="primary">{$LanguageStore === "TR" ? "toplam" : "total"}: {totalInvestmentAmount ? totalInvestmentAmount : 0} </Badge>
     </div>
     </div>
     
@@ -84,7 +78,7 @@
       <Link  to="expenses" >{$LanguageStore === "TR" ? "Harcamalar" : "Expenses"} </Link>
       <div>
       <Badge color="primary">{expenseCount} {$LanguageStore === "TR" ? "İşlem" : "transactions"}</Badge>
-      <Badge color="primary">{$LanguageStore === "TR" ? "toplam" : "total"}: {totalExpenseAmount} </Badge>
+      <Badge color="primary">{$LanguageStore === "TR" ? "toplam" : "total"}: {totalExpenseAmount ? totalExpenseAmount : 0} </Badge>
     </div>
     </div>
     
@@ -93,7 +87,7 @@
       <Link   to="incomes" >{$LanguageStore === "TR" ? "Gelirler" : "Incomes"}</Link>
       <div>
         <Badge  color="primary">{incomesCount} {$LanguageStore === "TR" ? "İşlem" : "transactions"}</Badge>
-      <Badge color="primary">{$LanguageStore === "TR" ? "toplam" : "total"}: {totalIncomeAmount} </Badge>
+      <Badge color="primary">{$LanguageStore === "TR" ? "toplam" : "total"}: {totalIncomeAmount ? totalIncomeAmount : 0} </Badge>
       </div>
       
     </div>
