@@ -59,7 +59,10 @@
 
 <Router>
   <div class="header">
-    
+    <div on:click={() => selectedMenu = "new"} class:link="{selectedMenu === "new"}" >
+      <Link  to="form" >{$LanguageStore === "TR" ? "Yeni İşlem Ekle" : "New Transaction"} <span>+</span> </Link>
+      
+    </div>
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "transitions"}  class:link="{selectedMenu === "transitions"}" >
@@ -86,20 +89,18 @@
     </div>
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div on:click={() => selectedMenu = "new"} class:link="{selectedMenu === "new"}" >
-      <Link  to="form" >{$LanguageStore === "TR" ? "Yeni İşlem Ekle" : "New Transaction"}</Link>
-    </div>
+   
     <div class="lang" on:click={handleLanguage} >{$LanguageStore === "TR" ? "EN" : "TR"} </div>
     
     
     <div>
       {$LanguageStore === "TR" ? "Yatırımların Gelirlere Oranı" : "Ratio of Investment to Incomes "}
-          <Progress color="warning" value={(totalInvestmentAmount/totalIncomeAmount)*100} ></Progress> %{(totalInvestmentAmount/totalIncomeAmount)*100}
+          <Progress color="warning" value={(totalInvestmentAmount/totalIncomeAmount)*100} ></Progress> %{totalIncomeAmount === 0 ? 0 : (totalInvestmentAmount/totalIncomeAmount)*100}
 
     </div>
     <div>
       {$LanguageStore === "TR" ? "Giderlerin Gelirlere Oranı" : "Ratio of Expenses to Incomes "}
-          <Progress color="info" value={(totalExpenseAmount/totalIncomeAmount)*100} />% {(totalExpenseAmount/totalIncomeAmount)*100} 
+          <Progress color="info" value={(totalExpenseAmount/totalIncomeAmount)*100} />% {totalIncomeAmount === 0 ? 0 :(totalExpenseAmount/totalIncomeAmount)*100} 
 
     </div>
 
@@ -148,4 +149,14 @@
 
 </div>
 
+<style>
+  span{
+    width: 30px;
+    height: 20px;
+    background-color: red;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+  }
+</style>
 

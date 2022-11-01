@@ -66,10 +66,11 @@
 
 </script>
 
-<FormCard>
+<FormCard class="form" >
+  <button on:click={handleCloseForm} class="close-btn" >X</button>
     <header >
       <h2> {$LanguageStore === "TR" ? "İşlem Tipini Seçiniz" : "Choose your transaction type?"} </h2>
-      <button on:click={handleCloseForm} class="close-btn" >X</button>
+      
     </header>
   <form on:submit|preventDefault = {handleSubmit} >
     
@@ -102,16 +103,19 @@
   </FormCard>
 
 <style>
+  .form{
+    position: relative;
+  }
     header {
       max-width: 400px;
       margin: auto;
-      position: relative;
+      
     }
     .close-btn{
       position: absolute;
       background-color: rgba(0,0,0,0.2);
-      right: -70px;
-      top: -10px;
+      right: 0;
+      top: 0;
       width: 35px;
       height: 35px;
       color: black;
