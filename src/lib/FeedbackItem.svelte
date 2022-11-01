@@ -9,10 +9,12 @@ export let fb;
 
 
 
+
 const handleDelete = (id) => {
   FeedbackStore.update((currentFeedback) => {
     return currentFeedback.filter(item => item.id != id)
   })
+  
 }
 
 </script>

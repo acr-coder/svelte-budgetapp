@@ -55,6 +55,12 @@
 
   }
 
+  const handleCloseForm = () => {
+    selectedMenu = "transitions"
+      dispatch('selectMenu', selectedMenu)
+    navigate('/')
+  }
+
 
     
 
@@ -62,13 +68,14 @@
 
 <FormCard>
     <header >
-      <h2> {$LanguageStore === "TR" ? "İşlem Tipini Seçiniz" : "Choose your transition type?"} </h2>
+      <h2> {$LanguageStore === "TR" ? "İşlem Tipini Seçiniz" : "Choose your transaction type?"} </h2>
+      <button on:click={handleCloseForm} class="close-btn" >X</button>
     </header>
   <form on:submit|preventDefault = {handleSubmit} >
     
     <TransitionSelect  on:transition-select={handleSelect} />
     <div class="input-group">
-      <input type="text" on:input={message = null}  bind:value={text} placeholder={ $LanguageStore === "TR" ? "İşlem adı" : "Transition name..."}>
+      <input type="text" on:input={message = null}  bind:value={text} placeholder={ $LanguageStore === "TR" ? "İşlem adı" : "Transaction name..."}>
       
     </div>
     <div class="input-group">
@@ -98,7 +105,23 @@
     header {
       max-width: 400px;
       margin: auto;
+      position: relative;
     }
+    .close-btn{
+      position: absolute;
+      background-color: rgba(0,0,0,0.2);
+      right: -70px;
+      top: -10px;
+      width: 35px;
+      height: 35px;
+      color: black;
+      border-radius: 50%; 
+      transition: .25s ease-in-out;  
+     }
+     .close-btn:hover{
+      background-color: rgba(0,0,0,0.7);
+      color: #fff;
+     }
   
     header h2 {
       font-size: 22px;

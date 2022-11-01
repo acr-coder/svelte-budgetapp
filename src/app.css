@@ -35,7 +35,7 @@ ul{
   
   flex-direction: column;
   justify-content: start;
-  gap: 30px;
+  gap: 20px;
   padding: 10px 30px;
   position: relative;
   font-weight: 800;
@@ -54,13 +54,14 @@ ul{
   
 }
 .link{
-  border-bottom:1px solid yellow;
+  
   color: red;
   
 }
 .lang{
   position: absolute;
-  right: 50px;
+  left: 50px;
+  top: -30px;
   cursor: pointer;
 }
 
@@ -81,6 +82,7 @@ ul{
   .header{
     flex-direction: column;
     z-index: 999;
+    margin-top: 40px;
   }
 }
 

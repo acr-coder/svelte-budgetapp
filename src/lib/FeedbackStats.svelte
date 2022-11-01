@@ -1,6 +1,6 @@
 <script>
     import { FeedbackStore } from '../stores'
-  import Graph from './Graph.svelte';
+  //import Graph from './Graph.svelte';
   import { LanguageStore } from "../stores"
    
 
