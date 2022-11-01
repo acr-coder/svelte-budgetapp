@@ -1,6 +1,6 @@
 <script>
   import { Router, Link, Route } from "svelte-navigator";
-  import { Progress } from 'sveltestrap';
+  import { Progress, Badge } from 'sveltestrap';
   
   import Expenses from "./lib/Expenses.svelte";
   import FeedbackForm from './lib/FeedbackForm.svelte';
@@ -27,6 +27,9 @@
   }
 
   $:count = $FeedbackStore.length
+  $: incomesCount = $FeedbackStore.filter((item) => item.transitionType === "Income").length
+  $: expenseCount = $FeedbackStore.filter((item) => item.transitionType === "Expense").length
+  $: investmentsCount = $FeedbackStore.filter((item) => item.transitionType === "Investment").length
 
   let budget;
   let totalExpenseAmount;
@@ -44,6 +47,8 @@
      totalIncomeAmount = incomes.reduce((a, item) => a + item.amount, 0)
     budget = $FeedbackStore.reduce((a, item) => a + item.amount, 0) - 2*totalExpenseAmount - 2*totalInvestmentAmount
   }
+
+  
   
   
 
@@ -59,21 +64,25 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "transitions"}  class:link="{selectedMenu === "transitions"}" >
       <Link  to="/" >{$LanguageStore === "TR" ? "Tüm İşlemler" : "All Transactions"}  </Link>
+      <Badge color="primary">{count}</Badge>
     </div>
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "investments"} class:link="{selectedMenu === "investments"}" >
       <Link   to="investments" >{$LanguageStore === "TR" ? "Yatırımlar" : "Investments"} </Link>
+      <Badge color="primary">{investmentsCount}</Badge>
     </div>
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "expenses"} class:link="{selectedMenu === "expenses"}" >
       <Link  to="expenses" >{$LanguageStore === "TR" ? "Harcamalar" : "Expenses"} </Link>
+      <Badge color="primary">{expenseCount}</Badge>
     </div>
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div on:click={() => selectedMenu = "incomes"} class:link="{selectedMenu === "incomes"}" >
       <Link   to="incomes" >{$LanguageStore === "TR" ? "Gelirler" : "Incomes"}</Link>
+      <Badge color="primary">{incomesCount}</Badge>
     </div>
     
     <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -84,13 +93,13 @@
     
     
     <div>
-      Rate of Investments / Incomes
-          <Progress color="warning" value={(totalInvestmentAmount/totalIncomeAmount)*100} />
+      {$LanguageStore === "TR" ? "Yatırımların Gelirlere Oranı" : "Ratio of Investment to Incomes "}
+          <Progress color="warning" value={(totalInvestmentAmount/totalIncomeAmount)*100} ></Progress> %{(totalInvestmentAmount/totalIncomeAmount)*100}
 
     </div>
     <div>
-      Rate of Expenses / Incomes
-          <Progress color="info" value={(totalExpenseAmount/totalIncomeAmount)*100} />
+      {$LanguageStore === "TR" ? "Giderlerin Gelirlere Oranı" : "Ratio of Expenses to Incomes "}
+          <Progress color="info" value={(totalExpenseAmount/totalIncomeAmount)*100} />% {(totalExpenseAmount/totalIncomeAmount)*100} 
 
     </div>
 
