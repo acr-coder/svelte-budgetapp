@@ -21,6 +21,7 @@
     "chart.js": "^3.9.1",
     "svelte-chartjs": "^3.0.1",
     "svelte-navigator": "^3.2.2",
+    "svelte-table": "^0.5.2",
     "sveltestrap": "^5.9.0"
   }
 }

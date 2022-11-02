@@ -1,7 +1,8 @@
 <script>
   import { Router, Link, Route } from "svelte-navigator";
+  import Table from "./lib/Table.svelte";
   import { Progress, Badge } from "sveltestrap";
-
+  import NewTable from "./lib/NewTable.svelte";
   import Expenses from "./lib/Expenses.svelte";
   import FeedbackForm from "./lib/FeedbackForm.svelte";
   import FeedbackList from "./lib/FeedbackList.svelte";
@@ -18,6 +19,9 @@
     amountOfIncome,
     amountOfInvestment,
   } from "./stores";
+
+  
+  
 
   let selectedMenu = "transitions";
 
@@ -64,10 +68,18 @@
         class:link={selectedMenu === "transitions"}
       >
         <Link to="/"
-          >{$LanguageStore === "TR" ? "Tüm İşlemler" : "All Transactions"}
+          >{$LanguageStore === "TR" ? "Tüm İşlemler Kart Görünüm" : "All Transactions Card View"}
         </Link>
       </div>
-
+      <div
+      on:click={() => (selectedMenu = "table")}
+      class:link={selectedMenu === "table"}
+    >
+      <Link to="table"
+        >{$LanguageStore === "TR" ? "Tüm İşlemler Tablo Görünümü" : "All Transactions Table View"}</Link
+      >
+      
+    </div>
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
         on:click={() => (selectedMenu = "investments")}
@@ -130,6 +142,7 @@
           </Badge>
         </div>
       </div>
+      
 
       <!-- svelte-ignore a11y-click-events-have-key-events -->
 
@@ -188,6 +201,11 @@
       <Route path="incomes">
         <div class="list">
           <Incomes />
+        </div>
+      </Route>
+      <Route path="table">
+        <div >
+          <NewTable />
         </div>
       </Route>
     </main>

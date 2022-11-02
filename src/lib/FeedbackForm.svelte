@@ -29,7 +29,7 @@
     if(text.trim().length > min && text.trim().length < max  ){
       const newTransition = {
         id:Date.now(),
-        text,
+        text:text.toLocaleLowerCase(),
         amount: amount,
         transitionType,
         date
