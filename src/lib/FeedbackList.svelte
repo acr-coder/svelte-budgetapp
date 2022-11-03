@@ -52,10 +52,10 @@
  
  }else if(selectedDate === "Last Year desc"){
   filteredDate = new Date().toISOString().slice(0,10).replaceAll("-","") 
-  transactions = $FeedbackStore.filter((item)=>item.date.replaceAll("-","") > filteredDate-1000).sort(function(a, b){return a.date.replaceAll("-","") - b.date.replaceAll("-","")})
+  transactions = $FeedbackStore.filter((item)=>item.date.replaceAll("-","") > filteredDate-10000).sort(function(a, b){return a.date.replaceAll("-","") - b.date.replaceAll("-","")})
  }else if(selectedDate === "Last Year asc"){
   filteredDate = new Date().toISOString().slice(0,10).replaceAll("-","") 
-  transactions = $FeedbackStore.filter((item)=>item.date.replaceAll("-","") > filteredDate-1000).sort(function(a, b){return b.date.replaceAll("-","") - a.date.replaceAll("-","")})
+  transactions = $FeedbackStore.filter((item)=>item.date.replaceAll("-","") > filteredDate-10000).sort(function(a, b){return b.date.replaceAll("-","") - a.date.replaceAll("-","")})
  }
  
  
