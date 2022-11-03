@@ -5,11 +5,13 @@ const initial = []
 
 export const FeedbackStore = persistStore('data', initial)
 
+
 export const countOfIncome = derived(
     FeedbackStore,
     // @ts-ignore
     $FeedbackStore => $FeedbackStore.filter((item) => item.transitionType === "Income").length
 )
+
 export const amountOfIncome = derived(
     FeedbackStore,
     // @ts-ignore
