@@ -81,7 +81,7 @@
   <FormGroup>
     <Label>{$LanguageStore === "TR" ? "İşlem Ara" : "Search For Transactions"}</Label>
     <Input type="text" bind:value={search}  />
-    <Label for="exampleSelect">Select</Label>
+    <Label for="exampleSelect">{$LanguageStore === "TR" ? "Filtrele" : "Filter"}</Label>
     <Input type="select" name="select" id="exampleSelect" bind:value={selectedDate}  >
       <option value="All desc" >{$LanguageStore === "TR" ? "Tüm Zamanlar (İlk Tarihe Göre)" : "All Time (By First Date)"}</option>
       <option value="All asc" >{$LanguageStore === "TR" ? "Tüm Zamanlar (Son Tarihe Göre)" : "All Time (By Last Date)"}</option>
