@@ -6,7 +6,7 @@
   import { createEventDispatcher } from "svelte";
   import { fly, fade, slide, scale } from 'svelte/transition';
   import Button from "./Button.svelte";
- 
+  
   import FormCard from "./FormCard.svelte";
   import RatingSelect from "./RatingSelect.svelte";
   import TransitionSelect from "./TransitionSelect.svelte";
@@ -97,6 +97,7 @@
 </svelte:head>
 
 <FormCard class="form" >
+  
   <button on:click={handleCloseForm} class="close-btn" >X</button>
     <header >
       <h2> {$LanguageStore === "TR" ? "İşlem Tipini Seçiniz" : "Choose your transaction type?"} </h2>
