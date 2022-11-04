@@ -21,9 +21,10 @@ const handleDelete = (id) => {
 
 
 <Card transition_Type={fb.transitionType} >
-    <div class="num-display">
-        {fb.amount}
-    </div>
+    <input type="number" class="num-display" value={fb.amount} readonly={false} />
+      
+        
+    
     <button class="close" on:click={() => handleDelete(fb.id) } >X</button>
     <div class="text-display">
         {fb.text}
@@ -38,16 +39,18 @@ const handleDelete = (id) => {
       position: absolute;
       top: 0;
       left: -10px;
-      width: fit-content;
+      width: 50%;
       height: fit-content;
       background: #ff6a95;
       color: #fff;
       border: 1px #eee solid;
       border-radius: 10px;
-      padding: 5px;
+      padding:3px;
       text-align: center;
       font-size: 14px;
+      outline: none;
     }
+   
     .date-display {
       position: absolute;
       right: 0;
@@ -73,5 +76,12 @@ const handleDelete = (id) => {
       background: none;
       border: none;
     }
-    
+
+    @media only screen and (max-width: 600px) {
+      input[type="number"]{
+        width: 30%;
+        
+      }
+    }
+   
   </style>

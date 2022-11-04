@@ -75,6 +75,9 @@
 
    
 </script>
+<svelte:head>
+    <title>{$LanguageStore === "TR" ? "Tüm İşlemler " : "All Transactions"}</title>
+  </svelte:head>
 
   
   <!-- <Input type="search"  bind:value={search}  placeholder="Search" /> -->

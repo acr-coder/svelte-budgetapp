@@ -19,6 +19,7 @@
 	
 	
 	
+	
 	<Card>
 		<CardHeader>
 			<Input type="search" bind:value={search} class="ms-auto w-auto" placeholder="Search" />

@@ -74,6 +74,9 @@ import { Card, CardBody, CardHeader, Input, Table, Column, Styles, Button,Label,
        
 	
 </script>
+<svelte:head>
+    <title>{$LanguageStore === "TR" ? "Tüm İşlemler " : "All Transactions"}</title>
+  </svelte:head>
 
 
 

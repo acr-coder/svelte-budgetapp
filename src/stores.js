@@ -2,8 +2,11 @@ import { derived, writable } from "svelte/store";
 import { persistStore } from "./persistStore";
 
 const initial = []
+const optionInitial = ['maaş']
 
 export const FeedbackStore = persistStore('data', initial)
+
+export const transactionOptions = persistStore('optionNames', optionInitial)
 
 
 export const countOfIncome = derived(

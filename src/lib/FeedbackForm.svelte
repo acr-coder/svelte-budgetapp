@@ -1,10 +1,12 @@
 <script>
-  import { LanguageStore } from "../stores";
+  import { LanguageStore, transactionOptions } from "../stores";
+  import { Input } from "sveltestrap";
   import { useNavigate } from "svelte-navigator";
   import { FeedbackStore } from "../stores";
   import { createEventDispatcher } from "svelte";
   import { fly, fade, slide, scale } from 'svelte/transition';
   import Button from "./Button.svelte";
+ 
   import FormCard from "./FormCard.svelte";
   import RatingSelect from "./RatingSelect.svelte";
   import TransitionSelect from "./TransitionSelect.svelte";
@@ -15,9 +17,15 @@
   let btnDisabled = true
   let min = 3;
   let max = 20;
-  let message;
+  let messageEN;
+  let messageTR;
   let amount;
   let date;
+
+  let isNewTransaction = false;
+  
+  let newOption = ''
+  $:console.log(newOption);
 
   const navigate = useNavigate()
 
@@ -50,7 +58,25 @@
       
       navigate('/')
     }else{
-      message=`Text must be between ${min} and ${max} characters. `
+      messageEN=`Text must be between ${min} and ${max} characters. `
+      messageTR=`Lütfen ${min} ile ${max} karakter arasında bir değer giriniz. `
+    }
+
+  }
+  const handleOption = () => {
+    if(newOption.trim().length > min && text.trim().length < max  ){
+      
+      
+      transactionOptions.update((currentOption) => {
+        return [newOption, ...currentOption]
+      })
+
+      newOption=''
+        
+      
+    }else{
+      messageEN=`Text must be between ${min} and ${max} characters. `
+      messageTR=`Lütfen ${min} ile ${max} karakter arasında bir değer giriniz. `
     }
 
   }
@@ -61,10 +87,14 @@
     navigate('/')
   }
 
+  
 
     
 
 </script>
+<svelte:head>
+  <title>{$LanguageStore === "TR" ? "Yeni İşlem" : "New Transaction"}</title>
+</svelte:head>
 
 <FormCard class="form" >
   <button on:click={handleCloseForm} class="close-btn" >X</button>
@@ -76,8 +106,17 @@
     
     <TransitionSelect  on:transition-select={handleSelect} />
     <div class="input-group">
-      <input type="text" on:input={message = null}  bind:value={text} placeholder={ $LanguageStore === "TR" ? "İşlem adı" : "Transaction name..."}>
-      
+      <input list="transactionsNames" type="text" on:input={messageEN = null}  bind:value={text} placeholder={ $LanguageStore === "TR" ? "İşlem adı" : "Transaction name..."}>
+      <datalist id="transactionsNames">
+        {#each $transactionOptions as tn (tn) }
+          
+            <option value={tn}  ></option>
+            
+        {/each}
+       
+        
+        
+      </datalist>
     </div>
     <div class="input-group">
       <input type="number" required bind:value={amount} placeholder={ $LanguageStore === "TR" ? "İşlem miktarı..." : "Amount"} >
@@ -90,16 +129,33 @@
     <div class="btn-group">
       <Button  type="submit">{$LanguageStore === "TR" ? "Ekle" : "Add"}</Button>
     </div>
+    
       
     
-    {#if message}
+    {#if messageEN}
         <div in:scale out:scale class="message">
-            {message}
+            {$LanguageStore === "TR" ? messageTR : messageEN}
     </div>
     {/if}
     
     
   </form>
+  <span on:click={() => isNewTransaction = !isNewTransaction}  >{ $LanguageStore === "TR" ? "İşlem adı eklemek için buraya tıkla..." : "To add new transaction name click here..."}</span>
+
+  {#if isNewTransaction}
+    
+      <form class="options" on:submit|preventDefault={handleOption} >
+    <Input bind:value={newOption} type="text" placeholder={ $LanguageStore === "TR" ? "Yeni işlem adı..." : "New transaction name..."}/>
+    <Input color="primary" type="submit" value={$LanguageStore === "TR" ? "Ekle" : "Add"}/>
+    {#if messageEN}
+        <div in:scale out:scale class="message">
+            {$LanguageStore === "TR" ? messageTR : messageEN}
+    </div>
+    {/if}
+  </form>
+  
+  {/if}
+  
   </FormCard>
 
 <style>
@@ -162,6 +218,15 @@
       padding: 5px;
       display: flex;
       justify-content: center;
+    }
+
+    span{
+      cursor: pointer;
+      color: red;
+    }
+    .options{
+      display: flex;
+      justify-content: space-between;
     }
 
     @media only screen and (max-width: 600px) {
