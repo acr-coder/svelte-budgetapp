@@ -19,6 +19,7 @@
     amountOfIncome,
     amountOfInvestment,
   } from "./stores";
+  import TableList from "./lib/TableList.svelte";
 
   
   
@@ -205,7 +206,7 @@
       </Route>
       <Route path="table">
         <div >
-          <NewTable />
+          <TableList />
         </div>
       </Route>
     </main>

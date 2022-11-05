@@ -1,15 +1,13 @@
 
 <script>
-  import { FeedbackStore } from "../stores";
+  import { FeedbackStore, LanguageStore } from "../stores";
     import { createEventDispatcher } from "svelte";
   import Card from "./Card.svelte";
   import MdDeleteForever from 'svelte-icons/md/MdDeleteForever.svelte'
   import FaEdit from 'svelte-icons/fa/FaEdit.svelte'
   import FaCheck from 'svelte-icons/fa/FaCheck.svelte'
-  import { Button, Toast } from 'sveltestrap';
-  let isOpen = false;
-  let status = 'Closed';
-  const toggle = () => (isOpen = !isOpen);
+  
+ 
   
 
 export let fb;
@@ -21,6 +19,7 @@ let min = 3;
   let max = 20;
   let messageEN;
   let messageTR;
+  let transactionType;
 
 
 
@@ -33,15 +32,14 @@ const handleDelete = (id) => {
 }
 
 const updateTransaction = (transaction) => {
-  if(text.trim().length > min && text.trim().length < max  ){
-      const updatedTransition = {
-        id:Date.now(),
-        text:text.toLocaleLowerCase(),
-        amount: amount,
-        transitionType:transaction.transitionType,
-        date
-      }
-
+  if(text.trim().length < max  ){
+          const updatedTransition = {
+            id:Date.now(),
+            text: text ? text.toLocaleLowerCase() : fb.text,
+            amount: amount ? amount : fb.amount,
+            transitionType:transactionType ? transactionType : fb.transitionType,
+            date: date ? date : fb.date
+          }
       $FeedbackStore = $FeedbackStore.filter((item)=>item.id != transaction.id )      
 
       $FeedbackStore = [updatedTransition, ...$FeedbackStore]
@@ -52,10 +50,12 @@ const updateTransaction = (transaction) => {
       text = ''
       amount = ''
       date=''
-       
+       transactionType=''
+       alert($LanguageStore === "TR" ? "İşlem Güncellendi" : "Transaction Updated")
     }else{
-      messageEN=`Text must be between ${min} and ${max} characters. `
-      messageTR=`Lütfen ${min} ile ${max} karakter arasında bir değer giriniz. `
+      messageEN=`Text must be maximum ${max} characters. `
+          messageTR=`Lütfen en fazla ${max} karakter giriniz. `
+          alert($LanguageStore === "TR" ? messageTR : messageEN)
     }
 }
 
@@ -72,11 +72,11 @@ const updateTransaction = (transaction) => {
     <input type="text" class="text-display"  value={fb.text}   readonly />
     <input type="date" class="date-display" value={fb.date} readonly />
     {:else}
-    <input type="number" bind:value={amount} class="num-display"   />
+    <input type="number" bind:value={amount} class="num-display" placeholder={fb.amount}   />
     <div class="check" on:click={()=> updateTransaction(fb)}   ><FaCheck/></div>
     <div class="close"  on:click={() => handleDelete(fb.id) } ><MdDeleteForever /></div>
-    <input type="text" bind:value={text} class="text-display"      />
-    <input type="date" bind:value={date} class="date-display"   />
+    <input type="text" bind:value={text} class="text-display" placeholder={fb.text}     />
+    <input type="date" bind:value={date} class="date-display"  placeholder={fb.datedate} />
 
     {/if }
       

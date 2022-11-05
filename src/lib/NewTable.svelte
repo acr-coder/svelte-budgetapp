@@ -2,11 +2,25 @@
 	
 import { Card, CardBody, CardHeader, Input, Table, Column, Styles, Button,Label, FormGroup } from 'sveltestrap';
     import {FeedbackStore, LanguageStore} from "../stores"    
+    import MdDeleteForever from 'svelte-icons/md/MdDeleteForever.svelte'
+  import FaEdit from 'svelte-icons/fa/FaEdit.svelte'
+  import FaCheck from 'svelte-icons/fa/FaCheck.svelte'
+  import { each } from 'svelte/internal';
 	
 	let search = undefined;
   let selectedDate = ""
   let filteredDate = undefined
   let transactions = null
+  let isEdit = false;
+let amount;
+let text= '';
+let date;
+let transactionType;
+let min = 3;
+  let max = 20;
+  let messageEN;
+  let messageTR;
+  
  
   $: transactions = $FeedbackStore
 
@@ -71,7 +85,35 @@ import { Card, CardBody, CardHeader, Input, Table, Column, Styles, Button,Label,
      const handleDel = (id) => {
 		$FeedbackStore = $FeedbackStore.filter((item) => item.id != id)
 	 }    
+
+   const updateTransaction = (transaction) => {
+  if(text.trim().length > min && text.trim().length < max  ){
+      const updatedTransition = {
+        id:Date.now(),
+        text:text.toLocaleLowerCase(),
+        amount: amount,
+        transitionType:transaction.transitionType,
+        date
+      }
+
+      $FeedbackStore = $FeedbackStore.filter((item)=>item.id != transaction.id )      
+
+      $FeedbackStore = [updatedTransition, ...$FeedbackStore]
+
+      isEdit=false
+      
+
+      text = ''
+      amount = ''
+      date=''
        
+    }else{
+      messageEN=`Text must be between ${min} and ${max} characters. `
+      messageTR=`Lütfen ${min} ile ${max} karakter arasında bir değer giriniz. `
+    }
+}
+
+   
 	
 </script>
 <svelte:head>
@@ -104,22 +146,72 @@ import { Card, CardBody, CardHeader, Input, Table, Column, Styles, Button,Label,
 		
 	</CardHeader>
 	<CardBody>
-		<Table  rows={visibleTransactions} let:row={transaction} responsive  hover class="text-xs sm:text-lg" >
-			<Column header={$LanguageStore === "TR" ? "İşlem" : "Transaction"}  >
-				{transaction.text}
-			</Column>
-			<Column header={$LanguageStore === "TR" ? "Miktar" : "Amount"}>
-				{transaction.amount}
-			</Column>
-			<Column header={$LanguageStore === "TR" ? "Çeşidi" : "Type"}>
-				{transaction.transitionType}
-			</Column>
-			<Column header={$LanguageStore === "TR" ? "Tarih" : "Date"}>
-				{transaction.date}
-			</Column>
-			<Column >
-				<Button on:click={()=>handleDel(transaction.id)} size="sm" class="hover:bg-red-700" >X</Button>
-			</Column>
+		<Table  responsive  hover class="text-xs sm:text-lg" >
+      <thead>
+        <tr>
+          <th>{$LanguageStore === "TR" ? "İşlem" : "Transaction"} </th>
+        <th>{$LanguageStore === "TR" ? "Miktar" : "Amount"} </th>
+        <th>{$LanguageStore === "TR" ? "Çeşidi" : "Type"} </th>
+        <th>{$LanguageStore === "TR" ? "Tarih" : "Date"}</th>
+        </tr>
+        
+      </thead>
+      <tbody>
+        {#each visibleTransactions as vT (vT.id) }
+
+        {#if !isEdit}
+        <tr>
+          <td>{vT.text}</td>
+      <td>{vT.amount}</td>
+      <td>{vT.transitionType}</td>
+      <td>{vT.date}</td>
+      <td><Button on:click={()=> isEdit = !isEdit}  class="hover:bg-red-700 w-8 sm:w-12" ><FaEdit/></Button></td>
+      <td><Button on:click={()=>handleDel(vT.id)}  class="hover:bg-red-700 w-8 sm:w-12" ><MdDeleteForever/></Button></td>
+        </tr>
+          {:else}
+          <tr>
+            <td>
+              <input type="number" bind:value={text}   />              
+            </td>
+            
+            <td>
+              <input type="number" bind:value={amount}   />              
+            </td>
+            
+            <td>
+              <input type="number" bind:value={transactionType}   />              
+            </td>
+            
+            <td>
+              <input type="number" bind:value={date}   />              
+            </td>
+            <td><Button  class="hover:green-red-700 w-8 sm:w-12" ><FaCheck/></Button></td>
+            <td><Button on:click={()=>handleDel(vT.id)}  class="hover:bg-red-700 w-8 sm:w-12" ><MdDeleteForever/></Button></td>
+
+            
+          </tr>
+        {/if}
+        
+      
+    {/each}
+      </tbody>
+    
+      
+			
+				
+				
+			
+      
+			
 		</Table>
 	</CardBody>
 </Card>
+
+<style>
+  input[type="text"]{
+    width: 50%;
+  }
+  input[type="number"]{
+    width: 50%;
+  }
+</style>
