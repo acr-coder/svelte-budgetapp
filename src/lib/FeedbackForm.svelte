@@ -14,13 +14,22 @@
   export let selectedMenu;
   let text = ''
   let transitionType = "Income"
+  let transitionTypeTr;
   let btnDisabled = true
   let min = 3;
   let max = 20;
-  let messageEN;
-  let messageTR;
+  let message;
+  let messageTransactionName;
   let amount;
   let date;
+
+  $:if(transitionType === "Income"){
+    transitionTypeTr = "Gelir"
+  }else if(transitionType === "Expense"){
+    transitionTypeTr = "Harcama"
+  }else{
+    transitionTypeTr="Yatırım"
+  }
 
   let isNewTransaction = false;
   
@@ -39,8 +48,10 @@
         id:Date.now(),
         text:text.toLocaleLowerCase(),
         amount: amount,
-        transitionType,
-        date
+        transitionType,    
+        transitionTypeTr,
+        date,
+        
       }
       console.log(newTransition);
       FeedbackStore.update((currentTransition) => {
@@ -58,8 +69,7 @@
       
       navigate('/')
     }else{
-      messageEN=`Text must be between ${min} and ${max} characters. `
-      messageTR=`Lütfen ${min} ile ${max} karakter arasında bir değer giriniz. `
+      message = $LanguageStore === "TR" ? `Lütfen ${min} ile ${max} karakter arasında bir değer giriniz.` : `Text must be between ${min} and ${max} characters. `
     }
 
   }
@@ -75,8 +85,8 @@
         
       
     }else{
-      messageEN=`Text must be between ${min} and ${max} characters. `
-      messageTR=`Lütfen ${min} ile ${max} karakter arasında bir değer giriniz. `
+      messageTransactionName = $LanguageStore === "TR" ? `Lütfen ${min} ile ${max} karakter arasında bir değer giriniz.` : `Text must be between ${min} and ${max} characters. `
+
     }
 
   }
@@ -107,7 +117,7 @@
     
     <TransitionSelect  on:transition-select={handleSelect} />
     <div class="input-group">
-      <input list="transactionsNames" type="text" on:input={messageEN = null}  bind:value={text} placeholder={ $LanguageStore === "TR" ? "İşlem adı" : "Transaction name..."}>
+      <input list="transactionsNames" type="text" on:input={message = null}  bind:value={text} placeholder={ $LanguageStore === "TR" ? "İşlem adı" : "Transaction name..."}>
       <datalist id="transactionsNames">
         {#each $transactionOptions as tn (tn) }
           
@@ -133,9 +143,9 @@
     
       
     
-    {#if messageEN}
+    {#if message}
         <div in:scale out:scale class="message">
-            {$LanguageStore === "TR" ? messageTR : messageEN}
+            {message}
     </div>
     {/if}
     
@@ -146,11 +156,13 @@
   {#if isNewTransaction}
     
       <form class="options" on:submit|preventDefault={handleOption} >
-    <Input bind:value={newOption} type="text" placeholder={ $LanguageStore === "TR" ? "Yeni işlem adı..." : "New transaction name..."}/>
-    <Input color="primary" type="submit" value={$LanguageStore === "TR" ? "Ekle" : "Add"}/>
-    {#if messageEN}
+    <Input class="w-2/3" on:input={messageTransactionName=null} bind:value={newOption} type="text" placeholder={ $LanguageStore === "TR" ? "Yeni işlem adı..." : "New transaction name..."}/>
+    
+    <button class="btn" type="submit"  >{$LanguageStore === "TR" ? "Ekle" : "Add"}</button>
+    <button class="btn" on:click={()=>isNewTransaction=false} >{$LanguageStore === "TR" ? "İptal" : "Cancel"}</button>
+    {#if messageTransactionName}
         <div in:scale out:scale class="message">
-            {$LanguageStore === "TR" ? messageTR : messageEN}
+            {messageTransactionName}
     </div>
     {/if}
   </form>
@@ -212,7 +224,8 @@
     .message{
       padding-top: 10px;
       text-align: center;
-      color: rebeccapurple;
+      color: rgb(201, 50, 12);
+      font-size: 11px;
     }
 
     .btn-group{

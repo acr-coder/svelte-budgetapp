@@ -50,8 +50,10 @@
 </script>
 
 <div class="box">
+  
   <Router>
     <div class="header">
+      <div class="logo">ACR Budget App</div>
       <div
         class="yeni"
         on:click={() => (selectedMenu = "new")}
@@ -125,6 +127,7 @@
 
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
+      class="options"
         on:click={() => (selectedMenu = "incomes")}
         class:link={selectedMenu === "incomes"}
       >

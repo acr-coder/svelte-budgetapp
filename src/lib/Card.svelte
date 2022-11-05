@@ -5,7 +5,7 @@
 </script>
 
 <div
-  class="card "
+  class="card"
   class:inv={transition_Type === "Investment"}
   class:exp={transition_Type === "Expense"}
   class:inc={transition_Type === "Income"}

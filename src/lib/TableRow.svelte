@@ -13,10 +13,22 @@
     let text= '';
     let date;
     let transactionType;
+    let transitionTypeTr;
     let min = 3;
       let max = 20;
       let messageEN;
       let messageTR;
+
+      $:if(transactionType === "Income" || transactionType === "Gelir"){
+    transitionTypeTr = "Gelir"
+    transactionType = "Income"
+  }else if(transactionType === "Expense" || transactionType === "Harcama"){
+    transitionTypeTr = "Harcama"
+    transactionType = "Expense"
+  }else{
+    transitionTypeTr="Yatırım"
+    transactionType = "Investment"
+  }
 
         const handleDel = (id) => {
             $FeedbackStore = $FeedbackStore.filter((item) => item.id != id)
@@ -24,6 +36,7 @@
     
        const updateTransaction = (transaction) => {
       if(text.trim().length < max  ){
+        
           const updatedTransition = {
             id:Date.now(),
             text: text ? text.toLocaleLowerCase() : vT.text,
@@ -59,7 +72,7 @@
  <tr>
    <td>{vT.text}</td>
 <td>{vT.amount}</td>
-<td>{vT.transitionType}</td>
+<td>{$LanguageStore === "TR" ? vT.transitionTypeTr : vT.transitionType}</td>
 <td>{vT.date}</td>
 <td><Button on:click={()=> isEdit = !isEdit}  class="hover:bg-red-700 w-8 sm:w-12" ><FaEdit/></Button></td>
 <td><Button on:click={()=>handleDel(vT.id)}  class="hover:bg-red-700 w-8 sm:w-12" ><MdDeleteForever/></Button></td>
@@ -75,7 +88,12 @@
      </td>
      
      <td>
-       <input type="text" bind:value={transactionType} placeholder={vT.transitionType}  />              
+       <input list="options" type="text" bind:value={transactionType} placeholder={vT.transitionType}  /> 
+       <datalist id="options" >
+        <option value={$LanguageStore === "TR" ? "Gelir" : "Income"}></option>
+        <option value={$LanguageStore === "TR" ? "Harcama" : "Expense"}></option>
+        <option value={$LanguageStore === "TR" ? "Yatırım" : "Investment"}></option>
+       </datalist>             
      </td>
      
      <td>
